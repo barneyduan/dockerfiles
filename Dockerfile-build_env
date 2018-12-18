@@ -1,0 +1,43 @@
+FROM amd64/ubuntu:14.04
+
+RUN dpkg --add-architecture i386
+
+RUN echo "deb http://mirrors.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse" > /etc/apt/sources.list \
+ && echo "deb-src http://mirrors.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse" >> /etc/apt/sources.list \
+ && echo "deb http://mirrors.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse" >> /etc/apt/sources.list \
+ && echo "deb-src http://mirrors.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse" >> /etc/apt/sources.list \
+ && echo "deb http://mirrors.ustc.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse" >> /etc/apt/sources.list \
+ && echo "deb-src http://mirrors.ustc.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse" >> /etc/apt/sources.list \
+ && echo "deb http://mirrors.ustc.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse" >> /etc/apt/sources.list \
+ && echo "deb-src http://mirrors.ustc.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse" >> /etc/apt/sources.list \
+ && echo "## Not recommended" >> /etc/apt/sources.list \
+ && echo "# deb http://mirrors.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse" >> /etc/apt/sources.list \
+ && echo "# deb-src http://mirrors.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse" >> /etc/apt/sources.list
+
+RUN apt-get update
+
+RUN apt-get install -y libc6:i386 libncurses5:i386 libstdc++6:i386 libevent-dev:i386 \
+    libevent-pthreads-2.0-5:i386 libcrypto++9:i386 libssl1.0.0:i386 libmysqlcppconn7:i386 \
+    libtcmalloc-minimal4:i386 libjsoncpp0:i386 libjsoncpp0 traceroute bwm-ng \
+    gdb netcat iftop vim netcat mysql-client-core-5.5 gcc g++ make python cpp cpp-4.8 gcc-4.8 g++-4.8 \
+    gcc-4.8-multilib g++-4.8-multilib libmsgpack-dev:i386 libjsoncpp-dev:i386 libmysqlcppconn-dev:i386 \
+    libgtest-dev:i386 cmake libgoogle-perftools-dev:i386 libssl-dev:i386 \
+    libmysqlclient-dev:i386 libcrypto++-dev:i386 git binutils
+
+RUN cd /usr/src/gtest && cmake -DCMAKE_CXX_FLAGS=-m32 CMakeLists.txt && make && cp *.a /usr/lib/ && cd .. && rm -rf gtest
+RUN ln -s /usr/lib/libtcmalloc_minimal.so.4 /usr/lib/libtcmalloc_minimal.so.0
+
+RUN apt-get install -y wget
+
+RUN rm -rf /var/lib/{apt,dpkg,cache,log}/
+
+RUN cd /usr/src && wget https://www.bullseye.com/download/BullseyeCoverage-8.14.13-Linux-x64.tar \
+ && tar xvf BullseyeCoverage-8.14.13-Linux-x64.tar && cd BullseyeCoverage-8.14.13 \
+ && ./install --prefix /opt/BullseyeCoverage --key 3VPypR0MACbL1ZYRX30n4fXr0cRJfb3EpeQd \
+ && cd .. && rm -rf BullseyeCoverage-8.14.13/ && rm BullseyeCoverage-8.14.13-Linux-x64.tar
+
+ENV PATH="/opt/BullseyeCoverage/bin:${PATH}"
+
+VOLUME /data
+WORKDIR /data
+
