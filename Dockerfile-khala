@@ -1,7 +1,15 @@
 FROM ubuntu:18.04
 
-RUN apt-get update && apt-get install -y g++ cmake git \
-      libuv-dev libgtest-dev libgoogle-glog-dev \
-      libc6-dev libssl-dev
+RUN apt update && apt install -y g++ git make wget autoconf \
+      libgtest-dev libgoogle-glog-dev libc6-dev libssl-dev \
+      libtool libtool-bin
 
+RUN cd /tmp && wget https://github.com/Kitware/CMake/releases/download/v3.13.2/cmake-3.13.2-Linux-x86_64.sh \
+      && chmod +x cmake-3.13.2-Linux-x86_64.sh && ./cmake-3.13.2-Linux-x86_64.sh --prefix=/usr --skip-license \
+      && rm /tmp/cmake-3.13.2-Linux-x86_64.sh
+
+RUN cd /tmp && wget https://github.com/libuv/libuv/archive/v1.24.1.tar.gz \
+      && tar xf v1.24.1.tar.gz && cd libuv-1.24.1 && ./autogen.sh \
+      && ./configure && make && make install && rm /tmp/v1.24.1.tar.gz \
+      && rm -rf /tmp/libuv-1.24.1
 
