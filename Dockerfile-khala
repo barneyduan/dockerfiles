@@ -16,3 +16,6 @@ RUN cd /tmp && wget https://github.com/libuv/libuv/archive/v1.24.1.tar.gz \
 RUN cd /usr/src/gtest && cmake -H. -BRelease \
       && cmake --build Release && cd Release && make install
 
+RUN apt install && cd /tmp && wget https://raw.githubusercontent.com/cpplint/cpplint/master/cpplint.py \
+      && chmod +x cpplint.py
+
