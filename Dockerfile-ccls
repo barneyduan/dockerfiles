@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-RUN apt-get update && apt-get install g++ build-essential cmake git libncurses-dev zlib1g-dev \
+RUN apt-get update && apt-get install -y g++ build-essential cmake git libncurses-dev zlib1g-dev \
       libevent-dev \
       libcrypto++-dev libmsgpack-dev libjsoncpp-dev \
       libmysqlcppconn-dev libgtest-dev cmake libgoogle-perftools-dev \
