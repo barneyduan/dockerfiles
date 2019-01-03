@@ -6,11 +6,9 @@ RUN apt-get update && apt-get install -y g++ build-essential cmake git libncurse
       libmysqlcppconn-dev libgtest-dev cmake libgoogle-perftools-dev \
       libssl-dev libmysqlclient-dev libcrypto++-dev libc6-dev libc6-dev-i386
 
-RUN apt-get clean
-
 RUN git clone --depth=1 --recursive https://github.com/MaskRay/ccls
 
-RUN cd ccls && cmake -H. -BRelease && cmake --build Release
+RUN cd ccls && cmake -H. -BRelease -DDCMAKE_BUILD_TYPE=RelWithDebInfo && cmake --build Release
 
 ENV PATH $PATH:/ccls/Release
 
