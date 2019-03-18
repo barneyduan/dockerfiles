@@ -27,7 +27,8 @@ RUN apt-get install -y libc6:i386 libncurses5:i386 libstdc++6:i386 libevent-dev:
 RUN cd /usr/src/gtest && cmake -DCMAKE_CXX_FLAGS=-m32 CMakeLists.txt && make && cp *.a /usr/lib/ && cd .. && rm -rf gtest
 RUN ln -s /usr/lib/libtcmalloc_minimal.so.4 /usr/lib/libtcmalloc_minimal.so.0
 
-RUN apt-get install -y wget
+RUN apt-get install -y wget python-pip
+RUN pip install lmake
 
 RUN rm -rf /var/lib/{apt,dpkg,cache,log}/
 
