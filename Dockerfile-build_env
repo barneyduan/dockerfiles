@@ -28,16 +28,16 @@ RUN cd /usr/src/gtest && cmake -DCMAKE_CXX_FLAGS=-m32 CMakeLists.txt && make && 
 RUN ln -s /usr/lib/libtcmalloc_minimal.so.4 /usr/lib/libtcmalloc_minimal.so.0
 
 RUN apt-get install -y wget python-pip
-RUN pip install lmake==1.0.8
+RUN pip install lmake==1.0.9
 
 RUN rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-RUN cd /usr/src && wget https://www.bullseye.com/download/BullseyeCoverage-8.15.11-Linux-x64.tar \
- && tar xvf BullseyeCoverage-8.15.11-Linux-x64.tar && cd BullseyeCoverage-8.15.11 \
- && ./install --prefix /opt/BullseyeCoverage --key 3VPypR0MACbL1ZYRX30n4fXr0cRJfb3EpeQd \
- && cd .. && rm -rf BullseyeCoverage-8.15.11/ && rm BullseyeCoverage-8.15.11-Linux-x64.tar
-
-ENV PATH="/opt/BullseyeCoverage/bin:${PATH}"
+# RUN cd /usr/src && wget https://www.bullseye.com/download/BullseyeCoverage-8.15.11-Linux-x64.tar \
+#  && tar xvf BullseyeCoverage-8.15.11-Linux-x64.tar && cd BullseyeCoverage-8.15.11 \
+#  && ./install --prefix /opt/BullseyeCoverage --key 3VPypR0MACbL1ZYRX30n4fXr0cRJfb3EpeQd \
+#  && cd .. && rm -rf BullseyeCoverage-8.15.11/ && rm BullseyeCoverage-8.15.11-Linux-x64.tar
+#
+# ENV PATH="/opt/BullseyeCoverage/bin:${PATH}"
 
 VOLUME /data
 WORKDIR /data
