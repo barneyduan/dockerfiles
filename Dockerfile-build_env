@@ -28,7 +28,7 @@ RUN cd /usr/src/gtest && cmake -DCMAKE_CXX_FLAGS=-m32 CMakeLists.txt && make && 
 RUN ln -s /usr/lib/libtcmalloc_minimal.so.4 /usr/lib/libtcmalloc_minimal.so.0
 
 RUN apt-get install -y wget python-pip
-RUN pip install lmake==1.0.9
+RUN pip install lmake==1.0.10
 
 RUN rm -rf /var/lib/{apt,dpkg,cache,log}/
 
