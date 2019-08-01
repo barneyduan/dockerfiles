@@ -17,6 +17,7 @@ RUN rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 RUN pip install lmake==1.0.11
 
+# autoconf
 RUN apt-get install -y autoconf
 
 # RUN cd /usr/src && wget https://www.bullseye.com/download/BullseyeCoverage-8.15.11-Linux-x64.tar \
