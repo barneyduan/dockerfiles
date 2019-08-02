@@ -19,6 +19,9 @@ RUN pip install lmake==1.0.11
 
 # autoconf
 RUN apt-get install -y autoconf
+RUN wget https://www.openssl.org/source/openssl-1.1.1c.tar.gz -O /tmp/openssl.tar.gz && cd /tmp \
+      && tar xf openssl.tar.gz && cd openssl-1.1.1c && ./config && make -j4 && make install \
+      && cd /tmp && rm -rf openssl-1.1.1c && rm openssl.tar.gz
 
 # RUN cd /usr/src && wget https://www.bullseye.com/download/BullseyeCoverage-8.15.11-Linux-x64.tar \
 #  && tar xvf BullseyeCoverage-8.15.11-Linux-x64.tar && cd BullseyeCoverage-8.15.11 \
