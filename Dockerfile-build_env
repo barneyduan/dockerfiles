@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y libc6:i386 libncurses5:i386 libstdc++6:
     libtcmalloc-minimal4:i386 libjsoncpp0:i386 libjsoncpp0 traceroute bwm-ng \
     gdb netcat iftop vim netcat mysql-client-core-5.5 gcc g++ make python cpp cpp-4.8 gcc-4.8 g++-4.8 \
     gcc-4.8-multilib g++-4.8-multilib libmsgpack-dev:i386 libjsoncpp-dev:i386 libmysqlcppconn-dev:i386 \
-    libgtest-dev:i386 cmake libgoogle-perftools-dev:i386 libssl-dev:i386 \
+    libgtest-dev:i386 cmake3 libgoogle-perftools-dev:i386 libssl-dev:i386 \
     libmysqlclient-dev:i386 libcrypto++-dev:i386 git binutils uuid-dev:i386 libtool wget python-pip \
     check libpcre3-dev:i386 autoconf pkg-config
 
@@ -17,10 +17,6 @@ RUN ln -s /usr/lib/libtcmalloc_minimal.so.4 /usr/lib/libtcmalloc_minimal.so.0
 RUN rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 RUN pip install lmake==1.0.11
-
-RUN wget https://github.com/Kitware/CMake/releases/download/v3.16.2/cmake-3.16.2.tar.gz -O /tmp/cmake.tar.gz && cd /tmp \
-      && tar xf cmake.tar.gz && cd cmake-3.16.2 && ./configure && make -j4 && make install \
-      && cd /tmp && rm -rf cmake-3.16.2 && rm cmake.tar.gz
 
 #RUN wget https://www.openssl.org/source/openssl-1.1.1c.tar.gz -O /tmp/openssl.tar.gz && cd /tmp \
 #      && tar xf openssl.tar.gz && cd openssl-1.1.1c && setarch i386 ./config -m32 && make -j4 && make install \
