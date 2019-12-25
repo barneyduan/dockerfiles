@@ -18,6 +18,10 @@ RUN rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 RUN pip install lmake==1.0.11
 
+RUN wget https://github.com/Kitware/CMake/releases/download/v3.16.2/cmake-3.16.2.tar.gz -O /tmp/cmake.tar.gz && cd /tmp \
+      && tar xf cmake.tar.gz && cd cmake-3.16.2 && ./configure && make -j4 && make install \
+      && cd /tmp && rm -rf cmake-3.16.2 && rm cmake.tar.gz
+
 #RUN wget https://www.openssl.org/source/openssl-1.1.1c.tar.gz -O /tmp/openssl.tar.gz && cd /tmp \
 #      && tar xf openssl.tar.gz && cd openssl-1.1.1c && setarch i386 ./config -m32 && make -j4 && make install \
 #      && cd /tmp && rm -rf openssl-1.1.1c && rm openssl.tar.gz
