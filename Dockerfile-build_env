@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y libc6:i386 libncurses5:i386 libstdc++6:
     gcc-4.8-multilib g++-4.8-multilib libmsgpack-dev:i386 libjsoncpp-dev:i386 libmysqlcppconn-dev:i386 \
     libgtest-dev:i386 cmake3 libgoogle-perftools-dev:i386 libssl-dev:i386 \
     libmysqlclient-dev:i386 libcrypto++-dev:i386 git binutils uuid-dev:i386 libtool wget python-pip \
-    check libpcre3-dev:i386 autoconf pkg-config ninja-build python3-pip
+    check libpcre3-dev:i386 autoconf pkg-config ninja-build python3-pip python3.5
 
 RUN cd /usr/src/gtest && cmake -DCMAKE_CXX_FLAGS=-m32 CMakeLists.txt && make && cp *.a /usr/lib/ && cd .. && rm -rf gtest
 RUN ln -s /usr/lib/libtcmalloc_minimal.so.4 /usr/lib/libtcmalloc_minimal.so.0
@@ -17,7 +17,7 @@ RUN ln -s /usr/lib/libtcmalloc_minimal.so.4 /usr/lib/libtcmalloc_minimal.so.0
 RUN rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 RUN pip install lmake==1.0.11
-RUN pip3 install meson
+RUN python3.5 -m pip install meson
 
 #RUN wget https://www.openssl.org/source/openssl-1.1.1c.tar.gz -O /tmp/openssl.tar.gz && cd /tmp \
 #      && tar xf openssl.tar.gz && cd openssl-1.1.1c && setarch i386 ./config -m32 && make -j4 && make install \
