@@ -5,15 +5,16 @@ RUN apt-get update && apt-get install -y libc6 libncurses5 libstdc++6 libevent-d
     libtcmalloc-minimal4 libjsoncpp0 libjsoncpp0 traceroute bwm-ng autoconf \
     gdb netcat iftop vim netcat mysql-client-core-5.5 gcc g++ make python cpp cpp-4.8 gcc-4.8 g++-4.8 \
     gcc-4.8-multilib g++-4.8-multilib libmsgpack-dev libjsoncpp-dev libmysqlcppconn-dev \
-    libgtest-dev cmake libgoogle-perftools-dev libssl-dev \
-    libmysqlclient-dev libcrypto++-dev git binutils uuid-dev libtool wget python-pip
+    libgtest-dev cmake3 libgoogle-perftools-dev libssl-dev \
+    libmysqlclient-dev libcrypto++-dev git binutils uuid-dev libtool wget python-pip \
+    check libpcre3-dev autoconf pkg-config ninja-build python3-pip python3.5
 
 RUN cd /usr/src/gtest && cmake CMakeLists.txt && make && cp *.a /usr/lib/ && cd .. && rm -rf gtest
 RUN ln -s /usr/lib/libtcmalloc_minimal.so.4 /usr/lib/libtcmalloc_minimal.so.0
 
 RUN rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-RUN pip install lmake==1.0.11
+#RUN pip install lmake==1.0.11
 
 RUN apt-get install -y llvm
 

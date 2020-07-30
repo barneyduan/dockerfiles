@@ -7,9 +7,13 @@ RUN apt-get update && apt-get install -y libc6:i386 libncurses5:i386 libstdc++6:
     libtcmalloc-minimal4:i386 libjsoncpp0:i386 libjsoncpp0 traceroute bwm-ng \
     gdb netcat iftop vim netcat mysql-client-core-5.5 gcc g++ make python cpp cpp-4.8 gcc-4.8 g++-4.8 \
     gcc-4.8-multilib g++-4.8-multilib libmsgpack-dev:i386 libjsoncpp-dev:i386 libmysqlcppconn-dev:i386 \
-    libgtest-dev:i386 cmake3 libgoogle-perftools-dev:i386 libssl-dev:i386 \
+    libgtest-dev:i386 libgoogle-perftools-dev:i386 libssl-dev:i386 \
     libmysqlclient-dev:i386 libcrypto++-dev:i386 git binutils uuid-dev:i386 libtool wget python-pip \
     check libpcre3-dev:i386 autoconf pkg-config ninja-build python3-pip python3.5
+
+RUN wget http://www.cmake.org/files/v3.2/cmake-3.2.0-Linux-i386.tar.gz -O /tmp/cmake.tar.gz && cd /tmp \
+    && tar xf cmake.tar.gz && cd cmake-3.2.0-Linux-i386 && ./config && make -j4 && make install \
+    && cd /tmp && rm -rf cmake-3.2.0-Linux-i386 && rm cmake.tar.gz
 
 RUN cd /usr/src/gtest && cmake -DCMAKE_CXX_FLAGS=-m32 CMakeLists.txt && make && cp *.a /usr/lib/ && cd .. && rm -rf gtest
 RUN ln -s /usr/lib/libtcmalloc_minimal.so.4 /usr/lib/libtcmalloc_minimal.so.0
