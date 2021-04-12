@@ -1,0 +1,20 @@
+FROM amd64/ubuntu:14.04
+
+RUN sed -i "s/archive.ubuntu.com/mirrors.aliyun.com/g" /etc/apt/sources.list
+RUN apt-get update && apt-get install -y libc6 libncurses5 libstdc++6 libevent-dev libevent-pthreads-2.0-5 \
+    gdb netcat iftop vim netcat gcc g++ make python cpp cpp-4.8 gcc-4.8 g++-4.8 \
+    gcc-4.8-multilib g++-4.8-multilib libmsgpack-dev libjsoncpp-dev \
+    libgtest-dev cmake3 libgoogle-perftools-dev \
+    git binutils uuid-dev libtool wget python-pip \
+    check libpcre3-dev autoconf pkg-config ninja-build
+
+RUN wget https://www.openssl.org/source/openssl-1.1.1f.tar.gz -O /tmp/openssl.tar.gz && cd /tmp \
+    && tar xf openssl.tar.gz && cd openssl-1.1.1f && ./config -m64 -fPIC no-shared && make -j8 && make install \
+    && cd /tmp && rm -rf openssl-1.1.1f && rm openssl.tar.gz
+
+RUN apt-get install -y software-properties-common && sudo add-apt-repository ppa:deadsnakes/ppa \
+    && apt-get update && apt-get install -y python3.6 python3-pip
+
+RUN rm /usr/bin/python && ln -s /usr/bin/python3.6 /usr/bin/python && rm /usr/bin/pip && ln -s /usr/bin/pip3 /usr/bin/pip
+
+RUN rm -rf /var/lib/{apt, dpkg, cache, log}/
